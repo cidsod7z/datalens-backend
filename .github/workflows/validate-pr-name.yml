@@ -1,29 +1,28 @@
-name: "🏷️ Validate PR Name"
-
-on:
+name: "\U0001F3F7\uFE0F Validate PR Name"
+'on':
   pull_request:
-    types: [opened, reopened, edited, synchronize]
-    branches: [main]
-
+    types:
+    - opened
+    - reopened
+    - edited
+    - synchronize
+    branches:
+    - main
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number }}
   cancel-in-progress: true
-
 jobs:
   commitlint-pr-title:
     name: Ensure proper PR title
-    runs-on: [ self-hosted, linux, k8s-runner-no-compose ]
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Commitlint PR title
-        uses: datalens-tech/commitlint-action@v1
-
+    - name: Commitlint PR title
+      uses: datalens-tech/commitlint-action@v1
   add_labels:
-    runs-on: [ self-hosted, linux, k8s-runner-no-compose ]
+    runs-on: ubuntu-latest
     needs: commitlint-pr-title
     permissions:
       pull-requests: write
-
     steps:
-      - name: Add labels to PR
-        uses: datalens-tech/add-labels-action@v1
+    - name: Add labels to PR
+      uses: datalens-tech/add-labels-action@v1
